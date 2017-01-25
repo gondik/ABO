@@ -1,6 +1,16 @@
 <?php
-class abo {
+
+namespace Gondik\Abo;
+
+use Gondik\Abo\Account;
+
+/**
+ *
+ */
+class Abo 
+{
 	const HEADER = 'UHL1';
+
 	private $items = array();
 	private $organization;
 	private $date;
@@ -8,7 +18,8 @@ class abo {
 	private $fixedKeyPart = null;
 	private $securityCode = null;
 	
-	public function __construct($organization = ""){		
+	public function __construct($organization = "")
+	{	
 		$this->setOrganization($organization);
 		$this->setDate();
 	}
@@ -18,7 +29,8 @@ class abo {
 	 * Set the organization name. Less then 20 chars.
 	 * @param string $organization
 	 */
-	public function setOrganization($organization){
+	public function setOrganization($organization)
+	{
 		$this->organization = $organization;
 		return $this;
 	}
@@ -30,7 +42,8 @@ class abo {
 	 * @param int $securityCode 6 numbers
 	 * @return abo
 	 */
-	public function setSecurityKey($fixed, $securityCode){
+	public function setSecurityKey($fixed, $securityCode)
+	{
 		$this->fixedKeyPart = $fixed;
 		$this->securityCode = $securityCode;
 		return $this;
@@ -41,7 +54,8 @@ class abo {
 	 * Set date of file
 	 * @param string $date format DDMMYY
 	 */
-	public function setDate($date = null){
+	public function setDate($date = null)
+	{
 		if($date == null) {
 			$date = date('dmy');	
 		}
@@ -50,7 +64,8 @@ class abo {
 		
 	}
 	
-	public function setComittentNumer($number){
+	public function setComittentNumer($number)
+	{
 		$this->comittent_number = $number;
 		return $this;
 	}
@@ -61,8 +76,9 @@ class abo {
 	 * @param int $type - 1501 : platebni prikaz , 1502 inkaso  abo_account_file::UHRADA|abo_account_file::INKASO
 	 * @return abo_account_file
 	 */
-	public function addAccountFile($type = 1501){
-		$item = new abo_account_file($type);
+	public function addAccountFile($type = 1501)
+	{
+		$item = new Account\File($type);
 		$this->items[] = $item;
 		$item->setNumber(count($this->items));
 		return $item;
@@ -73,11 +89,13 @@ class abo {
 	 * Get tha account files
 	 * @return array of abo_account_file
 	 */
-	public function getFiles(){
+	public function getFiles()
+	{
 		return $this->items;
 	}
 	
-	public function generate(){
+	public function generate()
+	{
 		$res = sprintf("%s%s% -20s%010d%03d%03d",self::HEADER, $this->date, $this->organization, $this->comittent_number,1,1+count($this->items));
 		if($this->securityCode){
 			$res .= sprintf("%06d%06d", $this->fixedKeyPart, $this->securityCode);
@@ -92,7 +110,8 @@ class abo {
 		
 	}
 	
-	public static function account($number, $pre = null){
+	public static function account($number, $pre = null)
+	{
 		$res = '';
 		if($pre){
 				$res.= sprintf("%d-",$pre);

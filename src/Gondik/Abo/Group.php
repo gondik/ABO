@@ -1,5 +1,9 @@
 <?php
-class abo_group {
+
+namespace Gondik\Abo;
+
+class Group 
+{
 	private $account_number = null;
 	private $account_pre_number = null;
 	private $items = array();
@@ -8,7 +12,7 @@ class abo_group {
 	public function generate(){
 		$res = "2 ";
 		if($this->account_number != null) {
-			$res .= abo::account($this->account_number, $this->account_pre_number)." ";
+			$res .= Abo::account($this->account_number, $this->account_pre_number)." ";
 		} 
 		if($this->dueDate == null) $this->setDate(); //date is not set, so today is the day
 		$res .= sprintf("%014d %s", $this->getAmount(), $this->dueDate);		
@@ -48,7 +52,7 @@ class abo_group {
 	 * @return abo_item
 	 */
 	public function addItem($account_number, $amount, $variable_sym){
-		$item = new abo_item($account_number, $amount, $variable_sym);
+		$item = new Item($account_number, $amount, $variable_sym);
 		$this->items[] = $item;
 		return $item;		
 	}

@@ -1,6 +1,11 @@
 <?php
-class abo_account_file{
-	
+
+namespace Gondik\Abo\Account;
+
+use Gondik\Abo\Group;
+
+class File
+{
 	const UHRADA = 1501; 
 	const INKASO = 1502;
 	 
@@ -79,7 +84,7 @@ class abo_account_file{
 	 * @return abo_group
 	 */
 	public function addGroup(){
-		$item = new abo_group();
+		$item = new Group();
 		$this->items[] = $item;
 		return $item;
 	}

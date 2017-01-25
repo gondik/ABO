@@ -1,6 +1,9 @@
 <?php 
 
-class abo_item {
+namespace Gondik\Abo;
+
+class Item 
+{
 	private $amount;
 	private $variable_sym = 0;
 	private $bank = 0;
@@ -106,9 +109,9 @@ class abo_item {
 	public function generate($supress_number = true){
 		$res = "";
 		if(!$supress_number) {
-			$res .= abo::account($this->dest_account,$this->dest_account_pre)." ";
+			$res .= Abo::account($this->dest_account,$this->dest_account_pre)." ";
 		}
-		$res .= sprintf("%s %d %s %s%04d ", abo::account($this->account_number,$this->account_pre), $this->amount, $this->variable_sym, $this->bank, $this->const_sym);
+		$res .= sprintf("%s %d %s %s%04d ", Abo::account($this->account_number,$this->account_pre), $this->amount, $this->variable_sym, $this->bank, $this->const_sym);
 		
 		$res .= ($this->spec_sym ? $this->spec_sym : ' ').' ';
 		$res .= ($this->message ? substr('AV:'.$this->message, 0,38) : ' ');
