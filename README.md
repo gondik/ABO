@@ -4,7 +4,7 @@
 Install gondik/abo using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require gondk/abo
+$ composer require gondik/abo
 ```
 
 ### Dependencies
@@ -17,7 +17,7 @@ use Gondik\Abo\Account\File;
 
 $abo = new Abo();
 $abo->setComittentNumer(222780978);
-$abo->setOrganization("Abs s.r.o.");
+$abo->setOrganization("Abc s.r.o.");
 $abo->setDate('271198');
 $account = $abo->addAccountFile(File::INKASO);
 $account->setBank('0300'); // kod banky, ktera bude zpracovavat (ta nase)
